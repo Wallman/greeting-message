@@ -1,6 +1,6 @@
 # syntax=docker/dockerfile:1
 
-FROM openjdk:17-alpine
+FROM openjdk:17-slim
 
 WORKDIR /app
 
