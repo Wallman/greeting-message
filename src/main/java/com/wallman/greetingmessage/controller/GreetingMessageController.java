@@ -6,6 +6,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 import reactor.core.publisher.Mono;
 
+import java.util.List;
+import java.util.Random;
+
 @RestController
 public class GreetingMessageController {
 
@@ -15,9 +18,11 @@ public class GreetingMessageController {
         this.repository = repository;
     }
 
-    @GetMapping(path = "/message", produces = "application/json")
+    @GetMapping(path = "/message", produces="application/json")
     public Mono<Greeting> message() {
-        String message = "Hello";
+        List<String> greetings = repository.getAll();
+        int randomIndex = greetings.size() == 1 ? 1 : greetings.size() - 1;
+        String message = greetings.get(new Random().nextInt(randomIndex));
         return Mono.just(new Greeting(message));
     }
 }
